@@ -12,7 +12,10 @@ const crypto = require('crypto');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+}));
 app.use(express.json({
     limit: '100mb',
     verify: (req, res, buf) => {
@@ -56,11 +59,12 @@ const verifyToken = (req, res, next) => {
 
     if (!token) return apiResponse(res, 401, false, 'Authentication required');
 
-    jwt.verify(token, process.env.JWT_SECRET || 'your_jwt_secret_key_here', (err, user) => {
-        if (err) return apiResponse(res, 403, false, 'Session expired. Please login again');
-        req.user = user;
-        next();
-    });
+    JWT_SECRET =
+        jwt.verify(token, process.env.JWT_SECRET || 'dvbrtrghjtrjhtrjhjhjtrjjrjtrjjtjjtrjtrjjtrjtr', (err, user) => {
+            if (err) return apiResponse(res, 403, false, 'Session expired. Please login again');
+            req.user = user;
+            next();
+        });
 };
 
 const isSuperAdmin = (req, res, next) => {
