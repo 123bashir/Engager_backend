@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<style>
+  body { margin: 0; font-family: Arial, sans-serif; font-size: 13px; color: #333; background: #fff; }
+  .wrapper { max-width: 700px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; }
+  .header { background: linear-gradient(135deg, #00bcd4, #34A853); padding: 30px; display: flex; justify-content: space-between; align-items: center; }
+  .header h1 { color: #fff; margin: 0; font-size: 36px; letter-spacing: 4px; }
+  .logo-box { background: #fff; padding: 10px 20px; border-radius: 6px; text-align: center; }
+  .logo-box div:first-child { font-weight: bold; font-size: 18px; color: #000; }
+  .logo-box div:last-child { font-size: 11px; color: #555; }
+  .meta { display: flex; padding: 20px 30px; background: #f9f9f9; border-bottom: 2px solid #00bcd4; gap: 30px; }
+  .meta-block label { font-size: 10px; color: #888; text-transform: uppercase; }
+  .meta-block div { font-weight: bold; font-size: 13px; margin-top: 4px; }
+  .section { padding: 20px 30px; }
+  .bill-to h4 { color: #888; font-size: 10px; text-transform: uppercase; margin-bottom: 8px; }
+  .bill-to p { margin: 2px 0; font-size: 13px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  thead { background: #00bcd4; color: #fff; }
+  thead th { padding: 10px 15px; text-align: left; font-size: 12px; }
+  tbody tr:nth-child(even) { background: #f4f4f4; }
+  tbody td { padding: 10px 15px; }
+  .totals { padding: 15px 30px; background: #f9f9f9; border-top: 1px solid #ddd; }
+  .total-row { display: flex; justify-content: flex-end; gap: 80px; padding: 5px 0; }
+  .total-row.grand { font-size: 16px; font-weight: bold; color: #34A853; border-top: 2px solid #ddd; margin-top: 8px; padding-top: 12px; }
+  .footer { text-align: center; padding: 20px; font-size: 11px; color: #aaa; border-top: 1px solid #eee; }
+  .pay-btn { display: block; width: fit-content; margin: 20px auto; padding: 14px 35px; background: #34A853; color: #fff; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 15px; text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="header">
+    <h1>INVOICE</h1>
+    <div class="logo-box">
+      <div>ENGAGER</div>
+      <div>Smart NFC Solutions</div>
+    </div>
+  </div>
+
+  <div class="meta">
+    <div class="meta-block">
+      <label>Date</label>
+      <div>02 March 2026</div>
+    </div>
+    <div class="meta-block">
+      <label>Invoice No.</label>
+      <div>#00000002</div>
+    </div>
+    <div class="meta-block">
+      <label>Payment Terms</label>
+      <div>Due on Receipt</div>
+    </div>
+    <div class="meta-block">
+      <label>Due Date</label>
+      <div>02 March 2026</div>
+    </div>
+  </div>
+
+  <div class="section bill-to">
+    <h4>Invoice To:</h4>
+    <p><strong>Bashir Muhammad</strong></p>
+    <p>basheeryusufagge012@gmail.com</p>
+  </div>
+
+  <div class="section">
+    <table>
+      <thead>
+        <tr>
+          <th>Quantity</th>
+          <th>Description</th>
+          <th>Unit Price</th>
+          <th>Line Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>
+            <strong>Google Reviews Card</strong><br/>
+            <span style="color:#888;font-size:11px">Title: cejhwejhwe &nbsp;|&nbsp; Slogan: N/A</span>
+          </td>
+          <td>NGN 29,000</td>
+          <td>NGN 29,000</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="totals">
+    <div class="total-row"><span>Subtotal</span><span>NGN 29,000</span></div>
+    <div class="total-row"><span>Shipping</span><span>Free</span></div>
+    <div class="total-row grand"><span>Total</span><span>NGN 29,000</span></div>
+  </div>
+
+  <a href="http://localhost:5174/payment?order=2" class="pay-btn">Proceed To Payment &rarr;</a>
+
+  <div class="footer">
+    Thank you for choosing Engager &mdash; Tap anywhere, anytime.<br/>
+    support@engager.com &nbsp;|&nbsp; www.engager.com
+  </div>
+</div>
+</body>
+</html>
