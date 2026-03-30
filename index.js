@@ -12,8 +12,22 @@ const crypto = require('crypto');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+const allowedOrigins = [
+    'http://localhost:3000',
+    'http://localhost:5173',
+    'http://localhost:5174',
+    'http://localhost:5175',
+];
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: (origin, callback) => {
+        // Allow requests with no origin (e.g. mobile apps, curl)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error(`CORS blocked: ${origin}`));
+        }
+    },
     credentials: true
 }));
 app.use(express.json({
@@ -124,10 +138,10 @@ app.post('/api/products', verifyToken, async (req, res) => {
         if (!req.body) {
             return res.status(400).json({ success: false, message: 'Request body is missing' });
         }
-        const { name, tag, description, price, oldPrice, image, image_path } = req.body;
+        const { name, tag, description, price, oldPrice, image, image_path, gallery } = req.body;
         await pool.query(
-            'INSERT INTO products (name, tag, description, price, oldPrice, image, image_path) VALUES (?, ?, ?, ?, ?, ?, ?)',
-            [name, tag, description, price, oldPrice, image, image_path]
+            'INSERT INTO products (name, tag, description, price, oldPrice, image, image_path, gallery) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+            [name, tag, description, price, oldPrice, image, image_path, JSON.stringify(gallery || [])]
         );
         res.status(201).json({ success: true, message: 'Product created' });
     } catch (error) {
@@ -139,7 +153,7 @@ app.post('/api/products', verifyToken, async (req, res) => {
 app.put('/api/products/:id', verifyToken, async (req, res) => {
     try {
         const fields = req.body;
-        const allowedFields = ['name', 'tag', 'description', 'price', 'oldPrice', 'image', 'image_path'];
+        const allowedFields = ['name', 'tag', 'description', 'price', 'oldPrice', 'image', 'image_path', 'gallery'];
 
         let query = 'UPDATE products SET ';
         let params = [];
@@ -148,7 +162,7 @@ app.put('/api/products/:id', verifyToken, async (req, res) => {
         for (const [key, value] of Object.entries(fields)) {
             if (allowedFields.includes(key)) {
                 sets.push(`${key} = ?`);
-                params.push(value);
+                params.push(key === 'gallery' ? JSON.stringify(value) : value);
             }
         }
 
